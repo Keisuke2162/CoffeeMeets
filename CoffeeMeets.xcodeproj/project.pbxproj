@@ -7,43 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6756E2A52BFBCF520036184D /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6756E2A42BFBCF520036184D /* AppFeature */; };
 		67ECB5602BFBBADF00D18BDA /* CoffeeMeetsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */; };
-		67ECB5622BFBBADF00D18BDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB5612BFBBADF00D18BDA /* ContentView.swift */; };
 		67ECB5642BFBBAE000D18BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67ECB5632BFBBAE000D18BDA /* Assets.xcassets */; };
 		67ECB5672BFBBAE000D18BDA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67ECB5662BFBBAE000D18BDA /* Preview Assets.xcassets */; };
-		67ECB5712BFBBAE000D18BDA /* CoffeeMeetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB5702BFBBAE000D18BDA /* CoffeeMeetsTests.swift */; };
-		67ECB57B2BFBBAE000D18BDA /* CoffeeMeetsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB57A2BFBBAE000D18BDA /* CoffeeMeetsUITests.swift */; };
-		67ECB57D2BFBBAE000D18BDA /* CoffeeMeetsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB57C2BFBBAE000D18BDA /* CoffeeMeetsUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		67ECB56D2BFBBAE000D18BDA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 67ECB5542BFBBADF00D18BDA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 67ECB55B2BFBBADF00D18BDA;
-			remoteInfo = CoffeeMeets;
-		};
-		67ECB5772BFBBAE000D18BDA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 67ECB5542BFBBADF00D18BDA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 67ECB55B2BFBBADF00D18BDA;
-			remoteInfo = CoffeeMeets;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		67ECB55C2BFBBADF00D18BDA /* CoffeeMeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoffeeMeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMeetsApp.swift; sourceTree = "<group>"; };
-		67ECB5612BFBBADF00D18BDA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		67ECB5632BFBBAE000D18BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67ECB5662BFBBAE000D18BDA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		67ECB56C2BFBBAE000D18BDA /* CoffeeMeetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeMeetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		67ECB5702BFBBAE000D18BDA /* CoffeeMeetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMeetsTests.swift; sourceTree = "<group>"; };
-		67ECB5762BFBBAE000D18BDA /* CoffeeMeetsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeMeetsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		67ECB57A2BFBBAE000D18BDA /* CoffeeMeetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMeetsUITests.swift; sourceTree = "<group>"; };
-		67ECB57C2BFBBAE000D18BDA /* CoffeeMeetsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMeetsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		67ECB58C2BFBBF2100D18BDA /* CoffeeShare */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CoffeeShare; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,34 +26,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		67ECB5692BFBBAE000D18BDA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		67ECB5732BFBBAE000D18BDA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				6756E2A52BFBCF520036184D /* AppFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6756E2A32BFBCF520036184D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		67ECB5532BFBBADF00D18BDA = {
 			isa = PBXGroup;
 			children = (
 				67ECB55E2BFBBADF00D18BDA /* CoffeeMeets */,
 				67ECB58C2BFBBF2100D18BDA /* CoffeeShare */,
-				67ECB56F2BFBBAE000D18BDA /* CoffeeMeetsTests */,
-				67ECB5792BFBBAE000D18BDA /* CoffeeMeetsUITests */,
 				67ECB55D2BFBBADF00D18BDA /* Products */,
+				6756E2A32BFBCF520036184D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,8 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				67ECB55C2BFBBADF00D18BDA /* CoffeeMeets.app */,
-				67ECB56C2BFBBAE000D18BDA /* CoffeeMeetsTests.xctest */,
-				67ECB5762BFBBAE000D18BDA /* CoffeeMeetsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,7 +62,6 @@
 			isa = PBXGroup;
 			children = (
 				67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */,
-				67ECB5612BFBBADF00D18BDA /* ContentView.swift */,
 				67ECB5632BFBBAE000D18BDA /* Assets.xcassets */,
 				67ECB5652BFBBAE000D18BDA /* Preview Content */,
 			);
@@ -110,23 +74,6 @@
 				67ECB5662BFBBAE000D18BDA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		67ECB56F2BFBBAE000D18BDA /* CoffeeMeetsTests */ = {
-			isa = PBXGroup;
-			children = (
-				67ECB5702BFBBAE000D18BDA /* CoffeeMeetsTests.swift */,
-			);
-			path = CoffeeMeetsTests;
-			sourceTree = "<group>";
-		};
-		67ECB5792BFBBAE000D18BDA /* CoffeeMeetsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				67ECB57A2BFBBAE000D18BDA /* CoffeeMeetsUITests.swift */,
-				67ECB57C2BFBBAE000D18BDA /* CoffeeMeetsUITestsLaunchTests.swift */,
-			);
-			path = CoffeeMeetsUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,45 +92,12 @@
 			dependencies = (
 			);
 			name = CoffeeMeets;
+			packageProductDependencies = (
+				6756E2A42BFBCF520036184D /* AppFeature */,
+			);
 			productName = CoffeeMeets;
 			productReference = 67ECB55C2BFBBADF00D18BDA /* CoffeeMeets.app */;
 			productType = "com.apple.product-type.application";
-		};
-		67ECB56B2BFBBAE000D18BDA /* CoffeeMeetsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 67ECB5832BFBBAE000D18BDA /* Build configuration list for PBXNativeTarget "CoffeeMeetsTests" */;
-			buildPhases = (
-				67ECB5682BFBBAE000D18BDA /* Sources */,
-				67ECB5692BFBBAE000D18BDA /* Frameworks */,
-				67ECB56A2BFBBAE000D18BDA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				67ECB56E2BFBBAE000D18BDA /* PBXTargetDependency */,
-			);
-			name = CoffeeMeetsTests;
-			productName = CoffeeMeetsTests;
-			productReference = 67ECB56C2BFBBAE000D18BDA /* CoffeeMeetsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		67ECB5752BFBBAE000D18BDA /* CoffeeMeetsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 67ECB5862BFBBAE000D18BDA /* Build configuration list for PBXNativeTarget "CoffeeMeetsUITests" */;
-			buildPhases = (
-				67ECB5722BFBBAE000D18BDA /* Sources */,
-				67ECB5732BFBBAE000D18BDA /* Frameworks */,
-				67ECB5742BFBBAE000D18BDA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				67ECB5782BFBBAE000D18BDA /* PBXTargetDependency */,
-			);
-			name = CoffeeMeetsUITests;
-			productName = CoffeeMeetsUITests;
-			productReference = 67ECB5762BFBBAE000D18BDA /* CoffeeMeetsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -197,14 +111,6 @@
 				TargetAttributes = {
 					67ECB55B2BFBBADF00D18BDA = {
 						CreatedOnToolsVersion = 15.0.1;
-					};
-					67ECB56B2BFBBAE000D18BDA = {
-						CreatedOnToolsVersion = 15.0.1;
-						TestTargetID = 67ECB55B2BFBBADF00D18BDA;
-					};
-					67ECB5752BFBBAE000D18BDA = {
-						CreatedOnToolsVersion = 15.0.1;
-						TestTargetID = 67ECB55B2BFBBADF00D18BDA;
 					};
 				};
 			};
@@ -222,8 +128,6 @@
 			projectRoot = "";
 			targets = (
 				67ECB55B2BFBBADF00D18BDA /* CoffeeMeets */,
-				67ECB56B2BFBBAE000D18BDA /* CoffeeMeetsTests */,
-				67ECB5752BFBBAE000D18BDA /* CoffeeMeetsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -238,20 +142,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		67ECB56A2BFBBAE000D18BDA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		67ECB5742BFBBAE000D18BDA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -259,42 +149,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67ECB5622BFBBADF00D18BDA /* ContentView.swift in Sources */,
 				67ECB5602BFBBADF00D18BDA /* CoffeeMeetsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		67ECB5682BFBBAE000D18BDA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				67ECB5712BFBBAE000D18BDA /* CoffeeMeetsTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		67ECB5722BFBBAE000D18BDA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				67ECB57B2BFBBAE000D18BDA /* CoffeeMeetsUITests.swift in Sources */,
-				67ECB57D2BFBBAE000D18BDA /* CoffeeMeetsUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		67ECB56E2BFBBAE000D18BDA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 67ECB55B2BFBBADF00D18BDA /* CoffeeMeets */;
-			targetProxy = 67ECB56D2BFBBAE000D18BDA /* PBXContainerItemProxy */;
-		};
-		67ECB5782BFBBAE000D18BDA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 67ECB55B2BFBBADF00D18BDA /* CoffeeMeets */;
-			targetProxy = 67ECB5772BFBBAE000D18BDA /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		67ECB57E2BFBBAE000D18BDA /* Debug */ = {
@@ -474,82 +333,6 @@
 			};
 			name = Release;
 		};
-		67ECB5842BFBBAE000D18BDA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D2B3JPR4TJ;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kei.CoffeeMeetsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoffeeMeets.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CoffeeMeets";
-			};
-			name = Debug;
-		};
-		67ECB5852BFBBAE000D18BDA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D2B3JPR4TJ;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kei.CoffeeMeetsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoffeeMeets.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CoffeeMeets";
-			};
-			name = Release;
-		};
-		67ECB5872BFBBAE000D18BDA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D2B3JPR4TJ;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kei.CoffeeMeetsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = CoffeeMeets;
-			};
-			name = Debug;
-		};
-		67ECB5882BFBBAE000D18BDA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D2B3JPR4TJ;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kei.CoffeeMeetsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = CoffeeMeets;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -571,25 +354,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		67ECB5832BFBBAE000D18BDA /* Build configuration list for PBXNativeTarget "CoffeeMeetsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				67ECB5842BFBBAE000D18BDA /* Debug */,
-				67ECB5852BFBBAE000D18BDA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		67ECB5862BFBBAE000D18BDA /* Build configuration list for PBXNativeTarget "CoffeeMeetsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				67ECB5872BFBBAE000D18BDA /* Debug */,
-				67ECB5882BFBBAE000D18BDA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6756E2A42BFBCF520036184D /* AppFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppFeature;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 67ECB5542BFBBADF00D18BDA /* Project object */;
 }

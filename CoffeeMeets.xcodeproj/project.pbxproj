@@ -44,6 +44,7 @@
 		67ECB5762BFBBAE000D18BDA /* CoffeeMeetsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeMeetsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		67ECB57A2BFBBAE000D18BDA /* CoffeeMeetsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMeetsUITests.swift; sourceTree = "<group>"; };
 		67ECB57C2BFBBAE000D18BDA /* CoffeeMeetsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMeetsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		67ECB58B2BFBBE4000D18BDA /* CoffeeSharing */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CoffeeSharing; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +75,7 @@
 		67ECB5532BFBBADF00D18BDA = {
 			isa = PBXGroup;
 			children = (
+				67ECB58B2BFBBE4000D18BDA /* CoffeeSharing */,
 				67ECB55E2BFBBADF00D18BDA /* CoffeeMeets */,
 				67ECB56F2BFBBAE000D18BDA /* CoffeeMeetsTests */,
 				67ECB5792BFBBAE000D18BDA /* CoffeeMeetsUITests */,

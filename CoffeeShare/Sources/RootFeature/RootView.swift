@@ -23,19 +23,14 @@ public struct RootView: View {
         .tag(2)
       Text("3")
         .tabItem {
-          Label("Search", systemImage: "map")
+          Label("Announce", systemImage: "envelope")
         }
         .tag(3)
       Text("4")
         .tabItem {
-          Label("Search", systemImage: "envelope")
+          Label("My Page", systemImage: "person")
         }
         .tag(4)
-      Text("5")
-        .tabItem {
-          Label("Search", systemImage: "person")
-        }
-        .tag(5)
     }
   }
 }

@@ -13,6 +13,10 @@ let package = Package(
         name: "AppFeature",
         targets: ["AppFeature"]
       ),
+      .library(
+        name: "RootFeature",
+        targets: ["RootFeature"]
+      ),
     ],
     dependencies: [
       .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.10.4"),
@@ -27,6 +31,12 @@ let package = Package(
       .testTarget(
         name: "AppFeatureTests",
         dependencies: ["AppFeature"]
-      )
+      ),
+      .target(
+        name: "RootFeature",
+        dependencies: [
+          .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        ]
+      ),
     ]
 )

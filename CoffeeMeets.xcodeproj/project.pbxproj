@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		6756E2A52BFBCF520036184D /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6756E2A42BFBCF520036184D /* AppFeature */; };
+		6756E2A92BFD56AD0036184D /* RootFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6756E2A82BFD56AD0036184D /* RootFeature */; };
 		67ECB5602BFBBADF00D18BDA /* CoffeeMeetsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */; };
 		67ECB5642BFBBAE000D18BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67ECB5632BFBBAE000D18BDA /* Assets.xcassets */; };
 		67ECB5672BFBBAE000D18BDA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67ECB5662BFBBAE000D18BDA /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6756E2A72BFD55DB0036184D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		67ECB55C2BFBBADF00D18BDA /* CoffeeMeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoffeeMeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMeetsApp.swift; sourceTree = "<group>"; };
 		67ECB5632BFBBAE000D18BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -27,6 +29,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6756E2A52BFBCF520036184D /* AppFeature in Frameworks */,
+				6756E2A92BFD56AD0036184D /* RootFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,8 +39,18 @@
 		6756E2A32BFBCF520036184D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6756E2A62BFD55DB0036184D /* Root */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6756E2A62BFD55DB0036184D /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				6756E2A72BFD55DB0036184D /* RootView.swift */,
+			);
+			name = Root;
+			path = CoffeeShare/Sources/Root;
 			sourceTree = "<group>";
 		};
 		67ECB5532BFBBADF00D18BDA = {
@@ -94,6 +107,7 @@
 			name = CoffeeMeets;
 			packageProductDependencies = (
 				6756E2A42BFBCF520036184D /* AppFeature */,
+				6756E2A82BFD56AD0036184D /* RootFeature */,
 			);
 			productName = CoffeeMeets;
 			productReference = 67ECB55C2BFBBADF00D18BDA /* CoffeeMeets.app */;
@@ -360,6 +374,10 @@
 		6756E2A42BFBCF520036184D /* AppFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppFeature;
+		};
+		6756E2A82BFD56AD0036184D /* RootFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RootFeature;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

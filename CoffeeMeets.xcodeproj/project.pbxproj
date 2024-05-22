@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6756E2A52BFBCF520036184D /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6756E2A42BFBCF520036184D /* AppFeature */; };
 		6756E2A92BFD56AD0036184D /* RootFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6756E2A82BFD56AD0036184D /* RootFeature */; };
+		6756E2AB2BFD6AA60036184D /* HomeFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6756E2AA2BFD6AA60036184D /* HomeFeature */; };
 		67ECB5602BFBBADF00D18BDA /* CoffeeMeetsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */; };
 		67ECB5642BFBBAE000D18BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67ECB5632BFBBAE000D18BDA /* Assets.xcassets */; };
 		67ECB5672BFBBAE000D18BDA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67ECB5662BFBBAE000D18BDA /* Preview Assets.xcassets */; };
@@ -30,6 +31,7 @@
 			files = (
 				6756E2A52BFBCF520036184D /* AppFeature in Frameworks */,
 				6756E2A92BFD56AD0036184D /* RootFeature in Frameworks */,
+				6756E2AB2BFD6AA60036184D /* HomeFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +110,7 @@
 			packageProductDependencies = (
 				6756E2A42BFBCF520036184D /* AppFeature */,
 				6756E2A82BFD56AD0036184D /* RootFeature */,
+				6756E2AA2BFD6AA60036184D /* HomeFeature */,
 			);
 			productName = CoffeeMeets;
 			productReference = 67ECB55C2BFBBADF00D18BDA /* CoffeeMeets.app */;
@@ -378,6 +381,10 @@
 		6756E2A82BFD56AD0036184D /* RootFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RootFeature;
+		};
+		6756E2AA2BFD6AA60036184D /* HomeFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HomeFeature;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

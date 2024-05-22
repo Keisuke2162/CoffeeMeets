@@ -9,19 +9,20 @@ let package = Package(
       .iOS(.v17),
     ],
     products: [
-      .library(
-        name: "AppFeature",
-        targets: ["AppFeature"]
-      ),
-      .library(
-        name: "RootFeature",
-        targets: ["RootFeature"]
-      ),
+      .library(name: "AppFeature", targets: ["AppFeature"]),
+      .library(name: "RootFeature", targets: ["RootFeature"]),
+      .library(name: "HomeFeature", targets: ["HomeFeature"]),
     ],
     dependencies: [
       .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.10.4"),
     ],
     targets: [
+      .target(
+        name: "Entity",
+        dependencies: [
+          .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        ]
+      ),
       .target(
         name: "AppFeature",
         dependencies: [
@@ -35,6 +36,13 @@ let package = Package(
       .target(
         name: "RootFeature",
         dependencies: [
+          .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        ]
+      ),
+      .target(
+        name: "HomeFeature",
+        dependencies: [
+          "Entity",
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         ]
       ),

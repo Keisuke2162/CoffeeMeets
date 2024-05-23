@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import HomeFeature
 import SwiftUI
 
 public struct RootView: View {
   public var body: some View {
     TabView {
-      Text("1")
+      HomeView()
         .tabItem {
           Label("Home", systemImage: "house")
         }

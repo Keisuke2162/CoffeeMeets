@@ -14,7 +14,7 @@ import SwiftUI
 @Reducer
 public struct CoffeeListItem {
   @ObservableState
-  public struct State: Equatable {
+  public struct State: Equatable, Identifiable {
     public var id: String { coffee.id }
 
     let coffee: Coffee
@@ -34,6 +34,8 @@ public struct CoffeeListItem {
     }
   }
 
+  public init() {}
+
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
@@ -48,6 +50,10 @@ public struct CoffeeListItem {
 
 struct CoffeeListItemView: View {
   let store: StoreOf<CoffeeListItem>
+  
+  public init(store: StoreOf<CoffeeListItem>) {
+    self.store = store
+  }
 
   var body: some View {
     Button {

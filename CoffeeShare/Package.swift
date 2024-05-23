@@ -13,11 +13,18 @@ let package = Package(
       .library(name: "RootFeature", targets: ["RootFeature"]),
       .library(name: "HomeFeature", targets: ["HomeFeature"]),
       .library(name: "Entity", targets: ["Entity"]),
+      .library(name: "APIClient", targets: ["APIClient"]),
     ],
     dependencies: [
       .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.10.4"),
     ],
     targets: [
+      .target(
+        name: "APIClient",
+        dependencies: [
+          "Entity",
+        ]
+      ),
       .target(
         name: "Entity",
         dependencies: [
@@ -45,6 +52,7 @@ let package = Package(
         name: "HomeFeature",
         dependencies: [
           "Entity",
+          "APIClient",
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         ]
       ),

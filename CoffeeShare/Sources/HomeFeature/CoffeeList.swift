@@ -5,6 +5,7 @@
 //  Created by Kei on 2024/05/22.
 //
 
+import APIClient
 import CasePaths
 import ComposableArchitecture
 import Entity
@@ -21,15 +22,22 @@ public struct CoffeeList {
     // 画面遷移の実装
     var path = StackState<Path.State>()
 
+    var isLoading: Bool = false
+    var gridType: HomeGridType = .column
+
     public init() {}
   }
 
   public enum Action: BindableAction {
     case onAppear
+    case tapChangeLayoutButton
+    case getCoffeeListResponse(Result<[Coffee], Error>)
     case binding(BindingAction<State>)
     case coffeeItems(IdentifiedActionOf<CoffeeListItem>)
     case path(StackAction<Path.State, Path.Action>)
   }
+
+  @Dependency(\.coffeeAPIClient) var coffeeAPIClient
 
   public init() {}
 
@@ -38,8 +46,34 @@ public struct CoffeeList {
     Reduce { state, action in
       switch action {
       case .onAppear:
-        state.coffeeItems = [.init(coffee: Coffee.mock(id: "1"))]
+        state.isLoading = true
+        return .run { send in
+          await send(.getCoffeeListResponse(
+            Result {
+              try await coffeeAPIClient.getCoffeeList()
+            }
+          ))
+        }
+      case .tapChangeLayoutButton:
+        switch state.gridType {
+        case .list:
+          state.gridType = .column
+        case .column:
+          state.gridType = .list
+        }
         return .none
+      case let .getCoffeeListResponse(result):
+        state.isLoading = false
+
+        switch result {
+        case let .success(coffees):
+          state.coffeeItems = .init(
+            uniqueElements: coffees.map { .init(coffee: $0) }
+          )
+          return .none
+        case .failure:
+          return .none
+        }
       case .binding:
         return .none
       case .coffeeItems:
@@ -62,6 +96,13 @@ extension CoffeeList {
   }
 }
 
+extension CoffeeList {
+  public enum HomeGridType {
+    case list
+    case column
+  }
+}
+
 
 public struct CoffeeListView: View {
   @Bindable var store: StoreOf<CoffeeList>
@@ -73,9 +114,40 @@ public struct CoffeeListView: View {
   public var body: some View {
     NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
       Group {
-        List {
-          ForEach(store.scope(state: \.coffeeItems, action: \.coffeeItems)) { store in
-            CoffeeListItemView.init(store: store)
+        if store.isLoading {
+          ProgressView()
+        } else {
+          VStack {
+            HStack {
+              Spacer()
+              Button(action: {
+                store.send(.tapChangeLayoutButton)
+              }, label: {
+                switch store.gridType {
+                case .list:
+                  Image(systemName: "list.bullet.rectangle.portrait")
+                case .column:
+                  Image(systemName: "square.grid.2x2")
+                }
+              })
+              .padding(.init(top: 16, leading: 16, bottom: 16, trailing: 32))
+            }
+            Spacer()
+            switch store.gridType {
+            case .list:
+              List {
+                ForEach(store.scope(state: \.coffeeItems, action: \.coffeeItems)) { store in
+                  CoffeeListItemView.init(store: store)
+                }
+              }
+            case .column:
+              // TODO: 専用のItemViewとReducerを追加してGridViewで表示する
+              List {
+                ForEach(store.scope(state: \.coffeeItems, action: \.coffeeItems)) { store in
+                  CoffeeListItemView.init(store: store)
+                }
+              }
+            }
           }
         }
       }
@@ -98,3 +170,15 @@ public struct CoffeeListView: View {
     }
   )
 }
+
+//#Preview {
+//  CoffeeListView(
+//    store: .init(initialState: CoffeeList.State()) {
+//      CoffeeList()
+//    } withDependencies: { dependencies in
+//      dependencies.coffeeAPIClient.getCoffeeList = { @Sendable _ in
+//        (1...50).map { .mock(id: "\($0)") }
+//      }
+//    }
+//  )
+//}

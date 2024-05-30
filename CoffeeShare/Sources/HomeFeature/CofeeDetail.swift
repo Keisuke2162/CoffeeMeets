@@ -46,6 +46,49 @@ public struct CoffeeDetailView: View {
   }
 
   public var body: some View {
-    Text("B")
+    ScrollView {
+      VStack(alignment: .leading) {
+        // Account
+        
+        // Image
+        Rectangle()
+          .aspectRatio(1, contentMode: .fit)
+          .overlay {
+            Image("cofee_sample", bundle: .module)
+              .resizable()
+              .aspectRatio(contentMode: .fill)
+          }
+          .clipped()
+          .frame(height: 400)
+        
+        // Category
+        HStack {
+          Image(systemName: "cup.and.saucer")
+            .padding()
+          Image(systemName: "mug")
+            .padding()
+          Image(systemName: "house.lodge")
+            .padding()
+          Image(systemName: "takeoutbag.and.cup.and.straw")
+            .padding()
+        }
+        // Title
+        Text("コロンビア")
+          .font(.title).bold()
+          .padding()
+        // Review
+        
+        // Text
+        
+      }
+      
+    }
+    .background(Color.brown)
   }
+}
+
+#Preview {
+  CoffeeDetailView(store: .init(initialState: CoffeeDetail.State(), reducer: {
+    CoffeeDetail()
+  }))
 }

@@ -1,5 +1,5 @@
 //
-//  CoffeeList.swift
+//  CoffeeListView.swift
 //
 //
 //  Created by Kei on 2024/05/22.
@@ -121,33 +121,20 @@ public struct CoffeeListView: View {
             HStack {
               Spacer()
               Button(action: {
-                store.send(.tapChangeLayoutButton)
+                // store.send(.tapChangeLayoutButton)
               }, label: {
-                switch store.gridType {
-                case .list:
-                  Image(systemName: "list.bullet.rectangle.portrait")
-                case .column:
-                  Image(systemName: "square.grid.2x2")
-                }
+                Image(systemName: "line.3.horizontal.decrease.circle")
               })
               .padding(.init(top: 16, leading: 16, bottom: 16, trailing: 32))
             }
             Spacer()
-            switch store.gridType {
-            case .list:
-              List {
-                ForEach(store.scope(state: \.coffeeItems, action: \.coffeeItems)) { store in
-                  CoffeeListItemView.init(store: store)
-                }
-              }
-            case .column:
-              // TODO: 専用のItemViewとReducerを追加してGridViewで表示する
-              List {
-                ForEach(store.scope(state: \.coffeeItems, action: \.coffeeItems)) { store in
-                  CoffeeListItemView.init(store: store)
-                }
+            List {
+              ForEach(store.scope(state: \.coffeeItems, action: \.coffeeItems)) { store in
+                CoffeeListItemView.init(store: store)
+                  .listRowSeparator(.hidden)
               }
             }
+            .listStyle(PlainListStyle())
           }
         }
       }
@@ -170,15 +157,3 @@ public struct CoffeeListView: View {
     }
   )
 }
-
-//#Preview {
-//  CoffeeListView(
-//    store: .init(initialState: CoffeeList.State()) {
-//      CoffeeList()
-//    } withDependencies: { dependencies in
-//      dependencies.coffeeAPIClient.getCoffeeList = { @Sendable _ in
-//        (1...50).map { .mock(id: "\($0)") }
-//      }
-//    }
-//  )
-//}

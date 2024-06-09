@@ -19,7 +19,14 @@ extension CoffeeAPIClient: DependencyKey {
     return Self(
       getCoffeeList: {
         // TODO: Request
-        return (0...10).map { .mock(id: "\($0)") }
+        let mock = (0...10).map {
+          if $0 % 2 == 0 {
+            Coffee.mock(id: "\($0)", type: .cafe)
+          } else {
+            Coffee.mock(id: "\($0)", type: .coffee)
+          }
+        }
+        return mock
       }
     )
   }()

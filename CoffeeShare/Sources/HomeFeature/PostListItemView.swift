@@ -1,5 +1,5 @@
 //
-//  CoffeeListItemView.swift
+//  PostListItemView.swift
 //
 //
 //  Created by Kei on 2024/05/22.
@@ -12,15 +12,15 @@ import Foundation
 import SwiftUI
 
 @Reducer
-public struct CoffeeListItem {
+public struct PostListItem {
   @ObservableState
   public struct State: Equatable, Identifiable {
-    public var id: String { coffee.id }
+    public var id: String { postItem.id }
 
-    let coffee: Coffee
+    let postItem: PostItem
 
-    public init(coffee: Coffee) {
-      self.coffee = coffee
+    public init(postItem: PostItem) {
+      self.postItem = postItem
     }
   }
 
@@ -30,7 +30,7 @@ public struct CoffeeListItem {
   
     @CasePathable
     public enum Delegate {
-      case tapItem(Coffee)
+      case tapItem(PostItem)
     }
   }
 
@@ -40,7 +40,7 @@ public struct CoffeeListItem {
     Reduce { state, action in
       switch action {
       case .tapItem:
-        return .send(.delegate(.tapItem(state.coffee)))
+        return .send(.delegate(.tapItem(state.postItem)))
       case .delegate:
         return .none
       }
@@ -48,10 +48,10 @@ public struct CoffeeListItem {
   }
 }
 
-struct CoffeeListItemView: View {
-  let store: StoreOf<CoffeeListItem>
+struct PostListItemView: View {
+  let store: StoreOf<PostListItem>
   
-  public init(store: StoreOf<CoffeeListItem>) {
+  public init(store: StoreOf<PostListItem>) {
     self.store = store
   }
 
@@ -72,15 +72,15 @@ struct CoffeeListItemView: View {
 //            ProgressView()
 //          }
 //        }
-        Image(store.coffee.thumbnailTitle, bundle: .module)
+        Image(store.postItem.thumbnailTitle, bundle: .module)
           .resizable()
           .scaledToFill()
           .frame(width: 88, height: 88)
           .clipShape(Rectangle())
         VStack(alignment: .leading, spacing: 8) {
-          typeView(type: store.coffee.type)
+          typeView(type: store.postItem.type)
             .padding(.top, 8)
-          Text(store.coffee.title)
+          Text(store.postItem.title)
             .font(.system(size: 12).bold())
             .foregroundStyle(.black)
           HStack(alignment: .center, spacing: 8) {
@@ -89,13 +89,13 @@ struct CoffeeListItemView: View {
               .aspectRatio(contentMode: .fit)
               .frame(width: 12)
               .foregroundStyle(.black)
-            if let place = store.coffee.place {
+            if let place = store.postItem.place {
               Text(place)
                 .font(.system(size: 8))
                 .foregroundStyle(.black)
             }
           }
-          starView(count: store.coffee.starCount)
+          starView(count: store.postItem.starCount)
           
         }
         Spacer()
@@ -108,7 +108,7 @@ struct CoffeeListItemView: View {
   }
   
   @ViewBuilder
-  private func typeView(type: Coffee.ItemType) -> some View {
+  private func typeView(type: PostItem.ItemType) -> some View {
     switch type {
     case .cafe:
       HStack(alignment: .center, spacing: 2) {
@@ -166,11 +166,11 @@ struct CustomButtonStyle: ButtonStyle {
 }
 
 #Preview {
-  CoffeeListItemView(
+  PostListItemView(
     store: .init(
-      initialState: CoffeeListItem.State(coffee: .mock(id: "1", type: .cafe)),
+      initialState: PostListItem.State(postItem: .mock(id: "1", type: .cafe)),
       reducer: {
-        CoffeeListItem()
+        PostListItem()
       }
     )
   )

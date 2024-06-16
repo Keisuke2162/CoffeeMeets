@@ -1,5 +1,5 @@
 //
-//  CoffeeListView.swift
+//  PostListView.swift
 //
 //
 //  Created by Kei on 2024/05/22.
@@ -14,11 +14,11 @@ import SwiftUI
 import IdentifiedCollections
 
 @Reducer
-public struct CoffeeList {
+public struct PostList {
   @ObservableState
   public struct State: Equatable {
     // 一覧の表示
-    var coffeeItems: IdentifiedArrayOf<CoffeeListItem.State> = []
+    var postItems: IdentifiedArrayOf<PostListItem.State> = []
     // 画面遷移の実装
     var path = StackState<Path.State>()
 
@@ -30,9 +30,9 @@ public struct CoffeeList {
   public enum Action: BindableAction {
     case onAppear
     case tapFilterButton
-    case getCoffeeListResponse(Result<[Coffee], Error>)
+    case getPostListResponse(Result<[PostItem], Error>)
     case binding(BindingAction<State>)
-    case coffeeItems(IdentifiedActionOf<CoffeeListItem>)
+    case postItems(IdentifiedActionOf<PostListItem>)
     case path(StackAction<Path.State, Path.Action>)
   }
 
@@ -47,7 +47,7 @@ public struct CoffeeList {
       case .onAppear:
         state.isLoading = true
         return .run { send in
-          await send(.getCoffeeListResponse(
+          await send(.getPostListResponse(
             Result {
               try await coffeeAPIClient.getCoffeeList()
             }
@@ -55,13 +55,13 @@ public struct CoffeeList {
         }
       case .tapFilterButton:
         return .none
-      case let .getCoffeeListResponse(result):
+      case let .getPostListResponse(result):
         state.isLoading = false
 
         switch result {
-        case let .success(coffees):
-          state.coffeeItems = .init(
-            uniqueElements: coffees.map { .init(coffee: $0) }
+        case let .success(items):
+          state.postItems = .init(
+            uniqueElements: items.map { .init(postItem: $0) }
           )
           return .none
         case .failure:
@@ -69,37 +69,37 @@ public struct CoffeeList {
         }
       case .binding:
         return .none
-      case let .coffeeItems(.element(id, .delegate(.tapItem))):
-        guard let item = state.coffeeItems[id: id]?.coffee else {
+      case let .postItems(.element(id, .delegate(.tapItem))):
+        guard let item = state.postItems[id: id]?.postItem else {
           return .none
         }
-        state.path.append(.coffeeDetail(.init(coffee: item)))
+        state.path.append(.postDetail(.init(postItem: item)))
         return .none
-      case .coffeeItems:
+      case .postItems:
         return .none
       case .path:
         return .none
       }
     }
-    .forEach(\.coffeeItems, action: \.coffeeItems) {
-      CoffeeListItem()
+    .forEach(\.postItems, action: \.postItems) {
+      PostListItem()
     }
     .forEach(\.path, action: \.path)
   }
 }
 
-extension CoffeeList {
+extension PostList {
   @Reducer(state: .equatable)
   public enum Path {
-    case coffeeDetail(CoffeeDetail)
+    case postDetail(PostDetail)
   }
 }
 
-public struct CoffeeListView: View {
+public struct PostListView: View {
   @Namespace private var nameSpace
-  @Bindable var store: StoreOf<CoffeeList>
+  @Bindable var store: StoreOf<PostList>
 
-  public init(store: StoreOf<CoffeeList>) {
+  public init(store: StoreOf<PostList>) {
     self.store = store
   }
 
@@ -121,14 +121,14 @@ public struct CoffeeListView: View {
             }
             Spacer()
             List {
-              ForEach(store.scope(state: \.coffeeItems, action: \.coffeeItems)) { store in
+              ForEach(store.scope(state: \.postItems, action: \.postItems)) { store in
                 if #available(iOS 18.0, *) {
-                  CoffeeListItemView.init(store: store)
-                    .navigationTransition(.zoom(sourceID: store.state.coffee.id, in: nameSpace))
+                  PostListItemView.init(store: store)
+                    .navigationTransition(.zoom(sourceID: store.state.postItem.id, in: nameSpace))
                     .listRowSeparator(.hidden)
                 } else {
                   // Fallback on earlier versions
-                  CoffeeListItemView.init(store: store)
+                  PostListItemView.init(store: store)
                     .listRowSeparator(.hidden)
                 }
               }
@@ -142,22 +142,17 @@ public struct CoffeeListView: View {
       }
     } destination: { store in
       switch store.case {
-      case let .coffeeDetail(store):
-        if #available(iOS 18.0, *) {
-          CoffeeDetailView(store: store)
-            .matchedTransitionSource(id: store.state.coffee.id, in: nameSpace)
-        } else {
-          CoffeeDetailView(store: store)
-        }
+      case let .postDetail(store):
+        PostDetailView(store: store)
       }
     }
   }
 }
 
 #Preview {
-  CoffeeListView(
-    store: .init(initialState: CoffeeList.State()) {
-      CoffeeList()
+  PostListView(
+    store: .init(initialState: PostList.State()) {
+      PostList()
     }
   )
 }

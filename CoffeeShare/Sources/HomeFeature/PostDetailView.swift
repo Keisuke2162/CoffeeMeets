@@ -1,5 +1,5 @@
 //
-//  CofeeDetailView.swift
+//  PostDetailView.swift
 //
 //
 //  Created by Kei on 2024/05/23.
@@ -13,14 +13,14 @@ import SwiftUI
 import IdentifiedCollections
 
 @Reducer
-public struct CoffeeDetail {
+public struct PostDetail {
   @ObservableState
   public struct State: Equatable {
-    public var id: String { coffee.id }
-    let coffee: Coffee
+    public var id: String { postItem.id }
+    let postItem: PostItem
 
-    public init(coffee: Coffee) {
-      self.coffee = coffee
+    public init(postItem: PostItem) {
+      self.postItem = postItem
     }
   }
 
@@ -44,10 +44,10 @@ public struct CoffeeDetail {
   }
 }
 
-public struct CoffeeDetailView: View {
-  @Bindable var store: StoreOf<CoffeeDetail>
+public struct PostDetailView: View {
+  @Bindable var store: StoreOf<PostDetail>
   
-  public init(store: StoreOf<CoffeeDetail>) {
+  public init(store: StoreOf<PostDetail>) {
     self.store = store
   }
 
@@ -55,7 +55,7 @@ public struct CoffeeDetailView: View {
     ScrollView {
       VStack(alignment: .leading) {
         // Image
-        Image(store.coffee.thumbnailTitle, bundle: .module)
+        Image(store.postItem.thumbnailTitle, bundle: .module)
           .resizable()
           .clipShape(.rect(cornerRadius: 8))
           .aspectRatio(contentMode: .fill)
@@ -63,9 +63,9 @@ public struct CoffeeDetailView: View {
           .padding(.horizontal, 32)
 
         VStack(alignment: .leading, spacing: 16) {
-          typeView(type: store.coffee.type)
+          typeView(type: store.postItem.type)
             .padding(.top, 32)
-          Text(store.coffee.title)
+          Text(store.postItem.title)
             .font(.system(size: 24).bold())
           HStack(alignment: .center, spacing: 12) {
             Image(systemName: "map")
@@ -73,28 +73,35 @@ public struct CoffeeDetailView: View {
               .aspectRatio(contentMode: .fit)
               .frame(width: 20)
               .foregroundStyle(.black)
-            if let place = store.coffee.place {
+            if let place = store.postItem.place {
               Text(place)
                 .font(.system(size: 16))
                 .foregroundStyle(.black)
             }
           }
-          starView(count: store.coffee.starCount)
+          starView(count: store.postItem.starCount)
           Spacer(minLength: 16)
           
-          VStack {
-            HStack {
-              
-              Text("諸島")
+          
+          Group {
+            VStack(alignment: .leading, spacing: 12) {
+              HStack(spacing: 8) {
+                Image("icon-user-sample", bundle: .module)
+                  .resizable()
+                  .frame(width: 32, height: 32)
+                  .clipShape(.circle)
+                Text("けいさん諸島")
+                  .font(.system(size: 14).weight(.medium))
+              }
+              // Description
+              if let discription = store.postItem.discription {
+                Text(discription)
+                  .font(.system(size: 14).weight(.medium))
+              }
             }
-            // Description
-            if let discription = store.coffee.discription {
-              Text(discription)
-                .font(.system(size: 16))
-                .padding(16)
-                .background(Color.coffeeDetailDescriptionColor)
-                .clipShape(.rect(cornerRadius: 8))
-            }
+            .padding(16)
+            .background(Color.coffeeDetailDescription)
+            .clipShape(.rect(cornerRadius: 8))
           }
         }
         .padding(.horizontal, 32)
@@ -103,7 +110,7 @@ public struct CoffeeDetailView: View {
   }
   
   @ViewBuilder
-  private func typeView(type: Coffee.ItemType) -> some View {
+  private func typeView(type: PostItem.ItemType) -> some View {
     switch type {
     case .cafe:
       HStack(alignment: .center, spacing: 2) {
@@ -154,7 +161,7 @@ public struct CoffeeDetailView: View {
 }
 
 #Preview {
-  CoffeeDetailView(store: .init(initialState: CoffeeDetail.State(coffee: .mock(id: "0", type: .coffee)), reducer: {
-    CoffeeDetail()
+  PostDetailView(store: .init(initialState: PostDetail.State(postItem: .mock(id: "0", type: .coffee)), reducer: {
+    PostDetail()
   }))
 }

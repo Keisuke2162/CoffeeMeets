@@ -12,8 +12,8 @@ public struct HomeView: View {
   public init() {}
 
   public var body: some View {
-    CoffeeListView(store: .init(initialState: CoffeeList.State(), reducer: {
-      CoffeeList()
+    PostListView(store: .init(initialState: PostList.State(), reducer: {
+      PostList()
     }))
   }
 }

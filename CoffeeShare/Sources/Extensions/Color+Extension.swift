@@ -8,5 +8,6 @@
 import SwiftUI
 
 public extension Color {
-    static let coffeeDetailDescriptionColor = Color("color-coffee-detail-description")
+  static let coffeeDetailDescription = Color("color-coffee-detail-description", bundle: .module)
+  static let backgroundPrimary = Color("color-background-primary", bundle: .module)
 }

@@ -11,7 +11,7 @@ import Entity
 
 @DependencyClient
 public struct CoffeeAPIClient {
-  public var getCoffeeList: @Sendable () async throws -> [Coffee]
+  public var getCoffeeList: @Sendable () async throws -> [PostItem]
 }
 
 extension CoffeeAPIClient: DependencyKey {
@@ -21,9 +21,9 @@ extension CoffeeAPIClient: DependencyKey {
         // TODO: Request
         let mock = (0...10).map {
           if $0 % 2 == 0 {
-            Coffee.mock(id: "\($0)", type: .cafe)
+            PostItem.mock(id: "\($0)", type: .cafe)
           } else {
-            Coffee.mock(id: "\($0)", type: .coffee)
+            PostItem.mock(id: "\($0)", type: .coffee)
           }
         }
         return mock

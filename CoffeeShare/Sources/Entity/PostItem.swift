@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PostItem.swift
 //  
 //
 //  Created by Kei on 2024/05/22.
@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-public struct Coffees: Codable {
+public struct PostItems: Codable {
   
 }
 
-public struct Coffee: Codable, Equatable, Identifiable {
+public struct PostItem: Codable, Equatable, Identifiable {
   public let id: String
   public let thumanbilImage: URL?
   public let thumbnailTitle: String
@@ -34,8 +34,8 @@ public struct Coffee: Codable, Equatable, Identifiable {
   }
 }
 
-extension Coffee {
-  public static func mock(id: String, type: ItemType) -> Coffee {
+extension PostItem {
+  public static func mock(id: String, type: ItemType) -> PostItem {
     switch type {
     case .cafe:
       return .init(
@@ -63,7 +63,7 @@ extension Coffee {
   }
 }
 
-extension Coffee {
+extension PostItem {
   public enum ItemType: String, Codable {
     case cafe
     case coffee

@@ -5,7 +5,6 @@
 //  Created by Kei on 2024/05/21.
 //
 
-import AppFeature
 import RootFeature
 import SwiftUI
 

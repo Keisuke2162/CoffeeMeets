@@ -122,15 +122,8 @@ public struct PostListView: View {
             Spacer()
             List {
               ForEach(store.scope(state: \.postItems, action: \.postItems)) { store in
-                if #available(iOS 18.0, *) {
-                  PostListItemView.init(store: store)
-                    .navigationTransition(.zoom(sourceID: store.state.postItem.id, in: nameSpace))
-                    .listRowSeparator(.hidden)
-                } else {
-                  // Fallback on earlier versions
-                  PostListItemView.init(store: store)
-                    .listRowSeparator(.hidden)
-                }
+                PostListItemView.init(store: store)
+                  .listRowSeparator(.hidden)
               }
             }
             .listStyle(PlainListStyle())

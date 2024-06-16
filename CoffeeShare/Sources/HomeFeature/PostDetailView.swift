@@ -24,21 +24,21 @@ public struct PostDetail {
     }
   }
 
-  public enum Action: BindableAction {
+  public enum Action {
     case onAppear
-    case binding(BindingAction<State>)
+    // case binding(BindingAction<State>)
   }
 
   public init() {}
 
   public var body: some ReducerOf<Self> {
-    BindingReducer()
+    // BindingReducer()
     Reduce { state, action in
       switch action {
       case .onAppear:
         return .none
-      case .binding:
-        return .none
+//      case .binding:
+//        return .none
       }
     }
   }
@@ -53,18 +53,23 @@ public struct PostDetailView: View {
 
   public var body: some View {
     ScrollView {
-      VStack(alignment: .leading) {
+      VStack(alignment: .center) {
+        // Header
+        
         // Image
         Image(store.postItem.thumbnailTitle, bundle: .module)
           .resizable()
           .clipShape(.rect(cornerRadius: 8))
-          .aspectRatio(contentMode: .fill)
+          .aspectRatio(contentMode: .fit)
           .frame(height: 224)
-          .padding(.horizontal, 32)
+          //.padding(.horizontal, 32)
 
         VStack(alignment: .leading, spacing: 16) {
-          typeView(type: store.postItem.type)
-            .padding(.top, 32)
+          HStack {
+            typeView(type: store.postItem.type)
+              .padding(.top, 32)
+            
+          }
           Text(store.postItem.title)
             .font(.system(size: 24).bold())
           HStack(alignment: .center, spacing: 12) {
@@ -72,11 +77,9 @@ public struct PostDetailView: View {
               .resizable()
               .aspectRatio(contentMode: .fit)
               .frame(width: 20)
-              .foregroundStyle(.black)
             if let place = store.postItem.place {
               Text(place)
                 .font(.system(size: 16))
-                .foregroundStyle(.black)
             }
           }
           starView(count: store.postItem.starCount)
@@ -90,13 +93,13 @@ public struct PostDetailView: View {
                   .resizable()
                   .frame(width: 32, height: 32)
                   .clipShape(.circle)
-                Text("けいさん諸島")
+                Text(store.postItem.reviewUserName)
                   .font(.system(size: 14).weight(.medium))
               }
               // Description
               if let discription = store.postItem.discription {
                 Text(discription)
-                  .font(.system(size: 14).weight(.medium))
+                  .font(.system(size: 16).weight(.medium))
               }
             }
             .padding(16)
@@ -107,6 +110,7 @@ public struct PostDetailView: View {
         .padding(.horizontal, 32)
       }
     }
+    //.navigationBarBackButtonHidden()
   }
   
   @ViewBuilder
@@ -117,11 +121,9 @@ public struct PostDetailView: View {
         Image(systemName: "storefront")
           .resizable()
           .aspectRatio(contentMode: .fit)
-          .frame(width: 12)
-          .foregroundStyle(.black)
+          .frame(width: 24)
         Text("cafe")
-          .font(.system(size: 8))
-          .foregroundStyle(.black)
+          .font(.system(size: 16).bold())
       }
     case .coffee:
       HStack(alignment: .center, spacing: 6) {
@@ -129,10 +131,8 @@ public struct PostDetailView: View {
           .resizable()
           .aspectRatio(contentMode: .fit)
           .frame(width: 24)
-          .foregroundStyle(.black)
         Text("coffee")
           .font(.system(size: 16).bold())
-          .foregroundStyle(.black)
       }
     }
   }

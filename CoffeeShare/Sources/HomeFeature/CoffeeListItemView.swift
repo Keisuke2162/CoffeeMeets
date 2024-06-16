@@ -57,7 +57,7 @@ struct CoffeeListItemView: View {
 
   var body: some View {
     Button {
-      store.send(.tapItem)
+       store.send(.tapItem)
     } label: {
       HStack(alignment: .top, spacing: 16) {
 //        AsyncImage(url: store.coffee.thumanbilImage) { phase in

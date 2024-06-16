@@ -9,28 +9,21 @@ let package = Package(
       .iOS(.v17),
     ],
     products: [
-      .library(name: "AppFeature", targets: ["AppFeature"]),
       .library(name: "RootFeature", targets: ["RootFeature"]),
-      .library(name: "HomeFeature", targets: ["HomeFeature"]),
-      .library(name: "Entity", targets: ["Entity"]),
-      .library(name: "APIClient", targets: ["APIClient"]),
     ],
     dependencies: [
-      .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.10.4"),
+      .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.11.1"),
     ],
     targets: [
       .target(
         name: "APIClient",
         dependencies: [
           "Entity",
-        ]
-      ),
-      .target(
-        name: "Entity",
-        dependencies: [
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         ]
       ),
+      .target(name: "Entity"),
+      .target(name: "Extensions"),
       .target(
         name: "AppFeature",
         dependencies: [
@@ -52,6 +45,7 @@ let package = Package(
         name: "HomeFeature",
         dependencies: [
           "Entity",
+          "Extensions",
           "APIClient",
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         ]

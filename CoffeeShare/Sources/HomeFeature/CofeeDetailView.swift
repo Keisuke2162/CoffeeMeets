@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Entity
+import Extensions
 import Foundation
 import SwiftUI
 import IdentifiedCollections
@@ -79,10 +80,22 @@ public struct CoffeeDetailView: View {
             }
           }
           starView(count: store.coffee.starCount)
+          Spacer(minLength: 16)
           
-          
-          // Description
-          
+          VStack {
+            HStack {
+              
+              Text("諸島")
+            }
+            // Description
+            if let discription = store.coffee.discription {
+              Text(discription)
+                .font(.system(size: 16))
+                .padding(16)
+                .background(Color.coffeeDetailDescriptionColor)
+                .clipShape(.rect(cornerRadius: 8))
+            }
+          }
         }
         .padding(.horizontal, 32)
       }

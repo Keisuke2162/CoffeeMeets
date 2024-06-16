@@ -6,13 +6,14 @@
 //
 
 import AppFeature
+import RootFeature
 import SwiftUI
 
 @main
 struct CoffeeMeetsApp: App {
     var body: some Scene {
         WindowGroup {
-          AppView()
+          RootView()
         }
     }
 }

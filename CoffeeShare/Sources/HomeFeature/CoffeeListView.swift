@@ -23,14 +23,13 @@ public struct CoffeeList {
     var path = StackState<Path.State>()
 
     var isLoading: Bool = false
-    var gridType: HomeGridType = .column
 
     public init() {}
   }
 
   public enum Action: BindableAction {
     case onAppear
-    case tapChangeLayoutButton
+    case tapFilterButton
     case getCoffeeListResponse(Result<[Coffee], Error>)
     case binding(BindingAction<State>)
     case coffeeItems(IdentifiedActionOf<CoffeeListItem>)
@@ -54,13 +53,7 @@ public struct CoffeeList {
             }
           ))
         }
-      case .tapChangeLayoutButton:
-        switch state.gridType {
-        case .list:
-          state.gridType = .column
-        case .column:
-          state.gridType = .list
-        }
+      case .tapFilterButton:
         return .none
       case let .getCoffeeListResponse(result):
         state.isLoading = false
@@ -75,6 +68,12 @@ public struct CoffeeList {
           return .none
         }
       case .binding:
+        return .none
+      case let .coffeeItems(.element(id, .delegate(.tapItem))):
+        guard let item = state.coffeeItems[id: id]?.coffee else {
+          return .none
+        }
+        state.path.append(.coffeeDetail(.init(coffee: item)))
         return .none
       case .coffeeItems:
         return .none
@@ -96,15 +95,8 @@ extension CoffeeList {
   }
 }
 
-extension CoffeeList {
-  public enum HomeGridType {
-    case list
-    case column
-  }
-}
-
-
 public struct CoffeeListView: View {
+  @Namespace private var nameSpace
   @Bindable var store: StoreOf<CoffeeList>
 
   public init(store: StoreOf<CoffeeList>) {
@@ -130,8 +122,15 @@ public struct CoffeeListView: View {
             Spacer()
             List {
               ForEach(store.scope(state: \.coffeeItems, action: \.coffeeItems)) { store in
-                CoffeeListItemView.init(store: store)
-                  .listRowSeparator(.hidden)
+                if #available(iOS 18.0, *) {
+                  CoffeeListItemView.init(store: store)
+                    .navigationTransition(.zoom(sourceID: store.state.coffee.id, in: nameSpace))
+                    .listRowSeparator(.hidden)
+                } else {
+                  // Fallback on earlier versions
+                  CoffeeListItemView.init(store: store)
+                    .listRowSeparator(.hidden)
+                }
               }
             }
             .listStyle(PlainListStyle())
@@ -144,7 +143,12 @@ public struct CoffeeListView: View {
     } destination: { store in
       switch store.case {
       case let .coffeeDetail(store):
-        CoffeeDetailView(store: store)
+        if #available(iOS 18.0, *) {
+          CoffeeDetailView(store: store)
+            .matchedTransitionSource(id: store.state.coffee.id, in: nameSpace)
+        } else {
+          CoffeeDetailView(store: store)
+        }
       }
     }
   }

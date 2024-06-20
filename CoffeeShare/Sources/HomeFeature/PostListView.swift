@@ -19,17 +19,22 @@ public struct PostList {
   public struct State: Equatable {
     // 一覧の表示
     var postItems: IdentifiedArrayOf<PostListItem.State> = []
-    // 画面遷移の実装
+    // 画面遷移
     var path = StackState<Path.State>()
-
+    // Loading
     var isLoading: Bool = false
+    // モーダル
+    @Presents var destination: Destination.State?
 
     public init() {}
   }
 
   public enum Action: BindableAction {
     case onAppear
+    // モーダル
+    case destination(PresentationAction<Destination.Action>)
     case tapFilterButton
+    // 投稿一覧取得
     case getPostListResponse(Result<[PostItem], Error>)
     case binding(BindingAction<State>)
     case postItems(IdentifiedActionOf<PostListItem>)
@@ -53,8 +58,14 @@ public struct PostList {
             }
           ))
         }
-      case .tapFilterButton:
+
+      case .destination:
         return .none
+
+      case .tapFilterButton:
+        state.destination = .postFilter(PostFilter.State())
+        return .none
+        
       case let .getPostListResponse(result):
         state.isLoading = false
 
@@ -67,19 +78,26 @@ public struct PostList {
         case .failure:
           return .none
         }
+        
       case .binding:
         return .none
+        
       case let .postItems(.element(id, .delegate(.tapItem))):
         guard let item = state.postItems[id: id]?.postItem else {
           return .none
         }
         state.path.append(.postDetail(.init(postItem: item)))
         return .none
+        
       case .postItems:
         return .none
+        
       case .path:
         return .none
       }
+    }
+    .ifLet(\.$destination, action: \.destination) {
+      Destination.body
     }
     .forEach(\.postItems, action: \.postItems) {
       PostListItem()
@@ -92,6 +110,11 @@ extension PostList {
   @Reducer(state: .equatable)
   public enum Path {
     case postDetail(PostDetail)
+  }
+  
+  @Reducer(state: .equatable)
+  public enum Destination {
+    case postFilter(PostFilter)
   }
 }
 
@@ -113,7 +136,7 @@ public struct PostListView: View {
             HStack {
               Spacer()
               Button(action: {
-                // store.send(.tapChangeLayoutButton)
+                store.send(.tapFilterButton)
               }, label: {
                 Image(systemName: "line.3.horizontal.decrease.circle")
               })
@@ -138,6 +161,10 @@ public struct PostListView: View {
       case let .postDetail(store):
         PostDetailView(store: store)
       }
+    }
+    .sheet(item: $store.scope(state: \.destination?.postFilter, action: \.destination.postFilter)) { store in
+      PostFilterView(store: store)
+        .presentationDetents([.medium])
     }
   }
 }

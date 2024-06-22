@@ -41,6 +41,8 @@ public struct PostList {
     case binding(BindingAction<State>)
     case postItems(IdentifiedActionOf<PostListItem>)
     case path(StackAction<Path.State, Path.Action>)
+    // 投稿ボタン
+    
   }
 
   @Dependency(\.coffeeAPIClient) var coffeeAPIClient
@@ -140,44 +142,66 @@ public struct PostListView: View {
   }
 
   public var body: some View {
-    NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-      Group {
-        if store.isLoading {
-          ProgressView()
-        } else {
-          VStack {
-            HStack {
-              Spacer()
-              Button(action: {
-                store.send(.tapFilterButton)
-              }, label: {
-                Image(systemName: "line.3.horizontal.decrease.circle")
-              })
-              .padding(.init(top: 16, leading: 16, bottom: 16, trailing: 32))
-            }
-            Spacer()
-            List {
-              ForEach(store.scope(state: \.postItems, action: \.postItems)) { store in
-                PostListItemView.init(store: store)
-                  .listRowSeparator(.hidden)
+    ZStack {
+      NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+        Group {
+          if store.isLoading {
+            ProgressView()
+          } else {
+            VStack {
+              HStack {
+                Spacer()
+                Button(action: {
+                  store.send(.tapFilterButton)
+                }, label: {
+                  Image(systemName: "line.3.horizontal.decrease.circle")
+                })
+                .padding(.init(top: 16, leading: 16, bottom: 16, trailing: 32))
               }
+              Spacer()
+              List {
+                ForEach(store.scope(state: \.postItems, action: \.postItems)) { store in
+                  PostListItemView.init(store: store)
+                    .listRowSeparator(.hidden)
+                }
+              }
+              .listStyle(PlainListStyle())
             }
-            .listStyle(PlainListStyle())
           }
         }
+        .onAppear {
+          store.send(.onAppear)
+        }
+      } destination: { store in
+        switch store.case {
+        case let .postDetail(store):
+          PostDetailView(store: store)
+        }
       }
-      .onAppear {
-        store.send(.onAppear)
+      .sheet(item: $store.scope(state: \.destination?.postFilter, action: \.destination.postFilter)) { store in
+        PostFilterView(store: store)
+          .presentationDetents([.medium])
       }
-    } destination: { store in
-      switch store.case {
-      case let .postDetail(store):
-        PostDetailView(store: store)
+      
+      VStack {
+        Spacer()
+        HStack {
+          Spacer()
+          Button {
+            //
+          } label: {
+            Image(systemName: "plus.circle")
+              .resizable()
+              .frame(width: 32, height: 32)
+              .foregroundStyle(Color.black)
+          }
+          .frame(width: 64, height: 64)
+          .background(Color.brown)
+          .clipShape(.rect(cornerRadius: 8))
+          .padding(32)
+        }
+        
       }
-    }
-    .sheet(item: $store.scope(state: \.destination?.postFilter, action: \.destination.postFilter)) { store in
-      PostFilterView(store: store)
-        .presentationDetents([.medium])
     }
   }
 }

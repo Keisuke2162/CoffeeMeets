@@ -17,6 +17,8 @@ import IdentifiedCollections
 public struct PostList {
   @ObservableState
   public struct State: Equatable {
+    // 絞り込みType
+    @Shared(.selectedPostItemTypes) var sharedSelectedTypes
     // 一覧の表示
     var postItems: IdentifiedArrayOf<PostListItem.State> = []
     // 画面遷移
@@ -50,6 +52,17 @@ public struct PostList {
     Reduce { state, action in
       switch action {
       case .onAppear:
+        state.isLoading = true
+        return .run { send in
+          await send(.getPostListResponse(
+            Result {
+              try await coffeeAPIClient.getCoffeeList()
+            }
+          ))
+        }
+
+      case .destination(.presented(.postFilter(.tapSaveButton))):
+        // TODO: Filterに変化がない場合は再取得しないようにしたい
         state.isLoading = true
         return .run { send in
           await send(.getPostListResponse(

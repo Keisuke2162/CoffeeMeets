@@ -8,6 +8,7 @@
 import CasePaths
 import ComposableArchitecture
 import Entity
+import Extensions
 import Foundation
 import SwiftUI
 
@@ -15,21 +16,23 @@ import SwiftUI
 public struct PostFilter {
   @ObservableState
   public struct State: Equatable {
-    // UserDefaults
-    var chooseTypes: [PostItem.ItemType] = []
+    @Shared(.selectedPostItemTypes) var sharedSelectedTypes
 
+    var selectedPostItemTypes: [PostItem.ItemType] = []
     var items: [PostItemType] {
       let items = PostItem.ItemType.allCases
       return items.map {
-        let isExist = chooseTypes.contains($0)
+        let isExist = selectedPostItemTypes.contains($0)
         return .init(type: $0, isChoose: isExist)
       }
     }
 
-    public init() {}
+    public init() {
+    }
   }
 
   public enum Action {
+    case onAppear
     case tapTypeView(PostItem.ItemType)
     case tapSaveButton
   }
@@ -41,15 +44,19 @@ public struct PostFilter {
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
+      case .onAppear:
+        // 保存ボタンタップ時にSharedの更新をしたいので一度変数にコピー
+        state.selectedPostItemTypes = state.sharedSelectedTypes
+        return .none
       case let .tapTypeView(type):
-        if let index = state.chooseTypes.firstIndex(of: type) {
-          state.chooseTypes.remove(at: index)
+        if let index = state.selectedPostItemTypes.firstIndex(of: type) {
+          state.selectedPostItemTypes.remove(at: index)
         } else {
-          state.chooseTypes.append(type)
+          state.selectedPostItemTypes.append(type)
         }
         return .none
       case .tapSaveButton:
-        // TODO: UserDefaults更新
+        state.sharedSelectedTypes = state.selectedPostItemTypes
         return .run { _ in
           await self.dismiss()
         }
@@ -109,6 +116,9 @@ struct PostFilterView: View {
       }
       .listStyle(.plain)
     }
+    .onAppear {
+      store.send(.onAppear)
+    }
   }
   
   @ViewBuilder
@@ -139,7 +149,8 @@ struct PostFilterView: View {
 }
 
 #Preview {
-  PostFilterView(store: .init(initialState: PostFilter.State(), reducer: {
+  @Shared(.selectedPostItemTypes) var sharedSelectedTypes = []
+  return PostFilterView(store: .init(initialState: PostFilter.State(), reducer: {
     PostFilter()
   }))
 }

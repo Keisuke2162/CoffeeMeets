@@ -68,7 +68,7 @@ extension PostItem {
 }
 
 extension PostItem {
-  public enum ItemType: String, Codable {
+  public enum ItemType: String, Codable, CaseIterable {
     case cafe
     case coffee
   }

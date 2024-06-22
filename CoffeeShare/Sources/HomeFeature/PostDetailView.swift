@@ -113,6 +113,7 @@ public struct PostDetailView: View {
     //.navigationBarBackButtonHidden()
   }
   
+  // TODO: これ使いまわしてるからどうにかしたい
   @ViewBuilder
   private func typeView(type: PostItem.ItemType) -> some View {
     switch type {

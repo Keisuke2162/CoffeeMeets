@@ -23,7 +23,12 @@ let package = Package(
         ]
       ),
       .target(name: "Entity"),
-      .target(name: "Extensions"),
+      .target(
+        name: "Extensions",
+        dependencies: [
+          .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        ]
+      ),
       .target(
         name: "AppFeature",
         dependencies: [

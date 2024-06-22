@@ -52,9 +52,9 @@ struct PostingModalView: View {
   }
 }
 
-#Preview {
-  return PostingModalView(store: .init(initialState: PostingModal.State(), reducer: {
-    PostingModal()
-  }))
-}
-
+//#Preview {
+//  return PostingModalView(store: .init(initialState: PostingModal.State(), reducer: {
+//    PostingModal()
+//  }))
+//}
+//

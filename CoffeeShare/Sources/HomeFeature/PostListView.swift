@@ -42,7 +42,7 @@ public struct PostList {
     case postItems(IdentifiedActionOf<PostListItem>)
     case path(StackAction<Path.State, Path.Action>)
     // 投稿ボタン
-    
+    case tapPostingButton
   }
 
   @Dependency(\.coffeeAPIClient) var coffeeAPIClient
@@ -109,6 +109,9 @@ public struct PostList {
         
       case .path:
         return .none
+      case .tapPostingButton:
+        state.destination = .postingModal(PostingModal.State())
+        return .none
       }
     }
     .ifLet(\.$destination, action: \.destination) {
@@ -130,6 +133,7 @@ extension PostList {
   @Reducer(state: .equatable)
   public enum Destination {
     case postFilter(PostFilter)
+    case postingModal(PostingModal)
   }
 }
 
@@ -182,13 +186,16 @@ public struct PostListView: View {
         PostFilterView(store: store)
           .presentationDetents([.medium])
       }
+      .sheet(item: $store.scope(state: \.destination?.postingModal, action: \.destination.postingModal)) { store in
+        PostingModalView(store: store)
+      }
       
       VStack {
         Spacer()
         HStack {
           Spacer()
           Button {
-            //
+            store.send(.tapPostingButton)
           } label: {
             Image(systemName: "plus.circle")
               .resizable()
@@ -206,10 +213,10 @@ public struct PostListView: View {
   }
 }
 
-#Preview {
-  PostListView(
-    store: .init(initialState: PostList.State()) {
-      PostList()
-    }
-  )
-}
+//#Preview {
+//  PostListView(
+//    store: .init(initialState: PostList.State()) {
+//      PostList()
+//    }
+//  )
+//}

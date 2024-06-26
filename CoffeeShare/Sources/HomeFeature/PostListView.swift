@@ -213,10 +213,10 @@ public struct PostListView: View {
   }
 }
 
-//#Preview {
-//  PostListView(
-//    store: .init(initialState: PostList.State()) {
-//      PostList()
-//    }
-//  )
-//}
+#Preview {
+  PostListView(
+    store: .init(initialState: PostList.State()) {
+      PostList()
+    }
+  )
+}

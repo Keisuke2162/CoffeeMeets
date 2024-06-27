@@ -25,7 +25,10 @@ public struct PostingModal {
     var description: String = ""
     
     // 写真
-    var selectedImages: [UIImage?] = []
+    var selectedImages: [UIImage?] = [
+      UIImage(named: "cafe_sample"),
+      UIImage(named: "coffee_sample")
+    ]
     var selectedPhotos: [PhotosPickerItem] = []
     let maxSelectablePhotoCount: Int = 4
     
@@ -88,22 +91,6 @@ public struct PostingModal {
 
 struct PostingModalView: View {
   @Bindable var store: StoreOf<PostingModal>
-  
-  /*
-   ScrollView(.horizontal) {
-                   HStack {
-                       ForEach(uiImages, id: \.self) { uiImage in
-                           if let uiImage {
-                               Image(uiImage: uiImage)
-                                   .resizable()
-                                   .scaledToFit()
-                                   .padding(20)
-                           }
-                       }
-                   }
-               }
-   */
-  
   public init(store: StoreOf<PostingModal>) {
     self.store = store
   }
@@ -111,6 +98,23 @@ struct PostingModalView: View {
   var body: some View {
     NavigationStack {
       VStack(alignment: .center, spacing: 32) {
+        Spacer()
+        if !store.selectedImages.isEmpty {
+          TabView {
+            ForEach(store.selectedImages, id: \.self) { image in
+              if let image {
+                Image(uiImage: image)
+                  .clipShape(.rect(cornerRadius: 8))
+                  .aspectRatio(contentMode: .fit)
+                  .frame(width: 300, height: 150, alignment: .center)
+              }
+            }
+            .tabViewStyle(.page)
+            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .interactive))
+            .frame(width: 300)
+          }
+        }
+        
         // 画像
         PhotosPicker(
           selection: $store.selectedPhotos,
@@ -127,20 +131,6 @@ struct PostingModalView: View {
         .onChange(of: store.selectedPhotos) {
           store.send(.selectedPhotosOnchange)
         }
-        
-        ScrollView(.horizontal) {
-          HStack {
-            ForEach(store.selectedImages, id: \.self) { image in
-              if let image {
-                Image(uiImage: image)
-                  .clipShape(.rect(cornerRadius: 8))
-                  .aspectRatio(contentMode: .fill)
-                  .frame(width: 300, height: 150, alignment: .center)
-              }
-            }
-          }
-        }
-        
         
         // Type選択
         HStack(spacing: 8) {

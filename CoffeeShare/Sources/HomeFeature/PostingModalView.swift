@@ -18,19 +18,22 @@ import PhotosUI
 public struct PostingModal {
   @ObservableState
   public struct State: Equatable {
+    // 入力
     var selectedType: PostItem.ItemType = .coffee
     var title: String = ""
     var starCount: Int = 3
     var place: String = ""
     var description: String = ""
-    
+
     // 写真
     var selectedImages: [UIImage] = []
     var showImagePicker: Bool = false
-     var selectedPhotos: [PhotosPickerItem] = []
-     let maxSelectablePhotoCount: Int = 4
-    
+    var selectedPhotos: [PhotosPickerItem] = []
+    let maxSelectablePhotoCount: Int = 4
 
+    // Loading
+    var isPostLoading: Bool = false
+    
     public init() {
     }
   }
@@ -38,15 +41,12 @@ public struct PostingModal {
   public enum Action: BindableAction {
     case binding(BindingAction<State>)
     case onAppear
+    case tapCancelButton
+    case tapPostButton
     case tapCategoryType(PostItem.ItemType)
     case tapStarButton(Int)
-    case tapCancelButton
-    
-    
-    case toggleImagePicker
-//    case imagesSelected([UIImage])
-     case selectedPhotosOnchange
-     case updateSelectedImage(UIImage)
+    case selectedPhotosOnchange
+    case updateSelectedImage(UIImage)
   }
 
   public init() {}
@@ -61,22 +61,17 @@ public struct PostingModal {
         return .none
       case .onAppear:
         return .none
+      case .tapCancelButton:
+        return .run { _ in await dismiss() }
+      case .tapPostButton:
+        // TODO: 投稿処理
+        return .none
       case let .tapCategoryType(type):
         state.selectedType = type
         return .none
       case let .tapStarButton(count):
         state.starCount = count
-        return .none
-      case .tapCancelButton:
-        return .run { _ in await dismiss() }
-      case .toggleImagePicker:
-        state.showImagePicker.toggle()
-        return .none
-//      case let .imagesSelected(images):
-//        state.selectedImages = images
-//        state.showImagePicker = false
-//        return .none
-      case .selectedPhotosOnchange:
+        return .none      case .selectedPhotosOnchange:
         state.selectedImages.removeAll()
         let selectedPhotos = state.selectedPhotos
         return .run { send in
@@ -90,7 +85,6 @@ public struct PostingModal {
           }
         }
       case let .updateSelectedImage(image):
-        print("テスト \(image)")
         state.selectedImages.append(image)
         return .none
       }
@@ -116,32 +110,8 @@ struct PostingModalView: View {
     GeometryReader { geo in
       NavigationStack {
         VStack(alignment: .center, spacing: 32) {
-          // 名前
-          
-          // ブランド（不要？）
-          
-          
-          // 場所
-          
-          
-          // 場所（詳細）
-          
-          
-          // 評価
-          
-          
-          // コメント
-          
-          
-          // 日付
-          
-          
-          // 写真
-          
-          
-          
-          // Type選択
           HStack {
+            // Type選択
             Button(action: {
               store.send(.tapCategoryType(store.selectedType))
             }, label: {
@@ -156,18 +126,17 @@ struct PostingModalView: View {
             )
             .padding()
             Spacer()
-            // 星
+            // 星評価
             starView(count: store.starCount)
               .frame(height: 144)
               .padding(.horizontal, 32)
           }
           .padding(.horizontal, 16)
           
-          
           VStack {
             ScrollView(.horizontal, showsIndicators: false) {
               if store.selectedImages.isEmpty {
-                // 画像
+                // 写真選択
                 HStack {
                   PhotosPicker(
                     selection: $store.selectedPhotos,
@@ -195,7 +164,6 @@ struct PostingModalView: View {
                       .frame(width: 100, height: 100)
                       .clipShape(.rect(cornerRadius: 8))
                   }
-                  // 画像
                   PhotosPicker(
                     selection: $store.selectedPhotos,
                     maxSelectionCount: 4,
@@ -218,7 +186,7 @@ struct PostingModalView: View {
             .frame(height: 120)
             .padding(.horizontal)
             
-            
+            // タイトル入力
             TextField("Title", text: $store.title)
               .font(.title)
               .padding()
@@ -227,7 +195,7 @@ struct PostingModalView: View {
                 focusedField = .content
               }
               .padding(.leading, 4)
-            
+            // 本文入力
             ZStack(alignment: .topLeading) {
               TextEditor(text: $store.description)
                 .padding()
@@ -257,6 +225,7 @@ struct PostingModalView: View {
             } label: {
               Text("投稿")
                 .padding(.trailing, 8)
+              
             }
           }
         }

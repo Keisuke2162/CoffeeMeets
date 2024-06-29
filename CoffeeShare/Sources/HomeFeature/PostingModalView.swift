@@ -24,6 +24,9 @@ public struct PostingModal {
     var starCount: Int = 3
     var place: String = ""
     var description: String = ""
+    
+    // Type選択フォーム
+    var isShowSelectTypeForm: Bool = false
 
     // 写真
     var selectedImages: [UIImage] = []

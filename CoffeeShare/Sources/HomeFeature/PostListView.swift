@@ -146,23 +146,13 @@ public struct PostListView: View {
   }
 
   public var body: some View {
-    ZStack {
-      NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+    NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+      ZStack {
         Group {
           if store.isLoading {
             ProgressView()
           } else {
             VStack {
-              HStack {
-                Spacer()
-                Button(action: {
-                  store.send(.tapFilterButton)
-                }, label: {
-                  Image(systemName: "line.3.horizontal.decrease.circle")
-                })
-                .padding(.init(top: 16, leading: 16, bottom: 16, trailing: 32))
-              }
-              Spacer()
               List {
                 ForEach(store.scope(state: \.postItems, action: \.postItems)) { store in
                   PostListItemView.init(store: store)
@@ -176,39 +166,51 @@ public struct PostListView: View {
         .onAppear {
           store.send(.onAppear)
         }
-      } destination: { store in
-        switch store.case {
-        case let .postDetail(store):
-          PostDetailView(store: store)
-        }
-      }
-      .sheet(item: $store.scope(state: \.destination?.postFilter, action: \.destination.postFilter)) { store in
-        PostFilterView(store: store)
-          .presentationDetents([.medium])
-      }
-      .sheet(item: $store.scope(state: \.destination?.postingModal, action: \.destination.postingModal)) { store in
-        PostingModalView(store: store)
-      }
-      
-      VStack {
-        Spacer()
-        HStack {
-          Spacer()
-          Button {
-            store.send(.tapPostingButton)
-          } label: {
-            Image(systemName: "plus.circle")
-              .resizable()
-              .frame(width: 32, height: 32)
-              .foregroundStyle(Color.black)
+        .toolbar {
+          ToolbarItem(placement: .topBarTrailing) {
+            Button(action: {
+              store.send(.tapFilterButton)
+            }, label: {
+              Image(systemName: "line.3.horizontal.decrease.circle")
+            })
+            .padding()
           }
-          .frame(width: 64, height: 64)
-          .background(Color.brown)
-          .clipShape(.rect(cornerRadius: 8))
-          .padding(32)
         }
-        
+        VStack {
+          Spacer()
+          HStack {
+            Spacer()
+            Button {
+              store.send(.tapPostingButton)
+            } label: {
+              Image(systemName: "plus")
+                .resizable()
+                .frame(width: 16, height: 16)
+                .foregroundStyle(Color.black)
+            }
+            .frame(width: 56, height: 56)
+            .background(Color.white)
+            .clipShape(.rect(cornerRadius: 8))
+            .overlay(
+              RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.black, lineWidth: 2)
+            )
+            .padding(32)
+          }
+        }
       }
+    } destination: { store in
+      switch store.case {
+      case let .postDetail(store):
+        PostDetailView(store: store)
+      }
+    }
+    .sheet(item: $store.scope(state: \.destination?.postFilter, action: \.destination.postFilter)) { store in
+      PostFilterView(store: store)
+        .presentationDetents([.medium])
+    }
+    .sheet(item: $store.scope(state: \.destination?.postingModal, action: \.destination.postingModal)) { store in
+      PostingModalView(store: store)
     }
   }
 }

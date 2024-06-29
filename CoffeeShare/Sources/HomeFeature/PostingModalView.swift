@@ -117,13 +117,6 @@ struct PostingModalView: View {
       NavigationStack {
         VStack(alignment: .center, spacing: 32) {
           // 名前
-          TextField("Title", text: $store.title)
-            .font(.title)
-            .padding()
-            .focused($focusedField, equals: .title)
-            .onSubmit {
-              focusedField = .content
-            }
           
           // ブランド（不要？）
           
@@ -173,30 +166,52 @@ struct PostingModalView: View {
           
           VStack {
             ScrollView(.horizontal, showsIndicators: false) {
-              HStack {
-                ForEach(store.selectedImages, id: \.self) { image in
-                  Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 100, height: 100)
-                    .clipShape(.rect(cornerRadius: 8))
-                }
+              if store.selectedImages.isEmpty {
                 // 画像
-                PhotosPicker(
-                  selection: $store.selectedPhotos,
-                  maxSelectionCount: 4,
-                  matching: .images,
-                  photoLibrary: .shared()
-                ) {
-                    Image(systemName: "photo")
-                      .resizable()
-                      .aspectRatio(contentMode: .fit)
-                      .frame(width: 32)
-                      .foregroundStyle(Color.black)
-                      .padding(32)
+                HStack {
+                  PhotosPicker(
+                    selection: $store.selectedPhotos,
+                    maxSelectionCount: 4,
+                    matching: .images,
+                    photoLibrary: .shared()
+                  ) {
+                      Image(systemName: "photo.tv")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 32)
+                        .foregroundStyle(Color.black)
+                  }
+                  .onChange(of: store.selectedPhotos) {
+                    store.send(.selectedPhotosOnchange)
+                  }
                 }
-                .onChange(of: store.selectedPhotos) {
-                  store.send(.selectedPhotosOnchange)
+                .frame(width: geo.size.width, height: 120)
+              } else {
+                HStack {
+                  ForEach(store.selectedImages, id: \.self) { image in
+                    Image(uiImage: image)
+                      .resizable()
+                      .scaledToFill()
+                      .frame(width: 100, height: 100)
+                      .clipShape(.rect(cornerRadius: 8))
+                  }
+                  // 画像
+                  PhotosPicker(
+                    selection: $store.selectedPhotos,
+                    maxSelectionCount: 4,
+                    matching: .images,
+                    photoLibrary: .shared()
+                  ) {
+                      Image(systemName: "photo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 32)
+                        .foregroundStyle(Color.black)
+                        .padding(32)
+                  }
+                  .onChange(of: store.selectedPhotos) {
+                    store.send(.selectedPhotosOnchange)
+                  }
                 }
               }
             }
@@ -204,6 +219,14 @@ struct PostingModalView: View {
             .padding(.horizontal)
             
             
+            TextField("Title", text: $store.title)
+              .font(.title)
+              .padding()
+              .focused($focusedField, equals: .title)
+              .onSubmit {
+                focusedField = .content
+              }
+              .padding(.leading, 4)
             
             ZStack(alignment: .topLeading) {
               TextEditor(text: $store.description)
@@ -211,15 +234,14 @@ struct PostingModalView: View {
                 .focused($focusedField, equals: .content)
               if store.description.isEmpty {
                 
-                Text("Content")
-                  .foregroundStyle(Color.gray)
+                Text("Comment")
+                  .font(.title3)
+                  .foregroundStyle(Color.gray.opacity(0.8))
                   .padding(24)
               }
             }
-            
           }
         }
-        .background(Color.brown.opacity(0.9))
         .toolbar {
           ToolbarItem(placement: .topBarLeading) {
             Button {

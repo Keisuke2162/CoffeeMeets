@@ -25,12 +25,10 @@ public struct PostingModal {
     var description: String = ""
     
     // 写真
-    var selectedImages: [UIImage?] = [
-      UIImage(named: "cafe_sample"),
-      UIImage(named: "coffee_sample")
-    ]
-    var selectedPhotos: [PhotosPickerItem] = []
-    let maxSelectablePhotoCount: Int = 4
+    var selectedImages: [UIImage] = []
+    var showImagePicker: Bool = false
+     var selectedPhotos: [PhotosPickerItem] = []
+     let maxSelectablePhotoCount: Int = 4
     
 
     public init() {
@@ -43,8 +41,12 @@ public struct PostingModal {
     case tapCategoryType(PostItem.ItemType)
     case tapStarButton(Int)
     case tapCancelButton
-    case selectedPhotosOnchange
-    case updateSelectedImage(UIImage)
+    
+    
+    case toggleImagePicker
+//    case imagesSelected([UIImage])
+     case selectedPhotosOnchange
+     case updateSelectedImage(UIImage)
   }
 
   public init() {}
@@ -67,6 +69,13 @@ public struct PostingModal {
         return .none
       case .tapCancelButton:
         return .run { _ in await dismiss() }
+      case .toggleImagePicker:
+        state.showImagePicker.toggle()
+        return .none
+//      case let .imagesSelected(images):
+//        state.selectedImages = images
+//        state.showImagePicker = false
+//        return .none
       case .selectedPhotosOnchange:
         state.selectedImages.removeAll()
         let selectedPhotos = state.selectedPhotos
@@ -89,103 +98,147 @@ public struct PostingModal {
   }
 }
 
+extension PostingModal {
+  enum Field: Hashable {
+    case title, content
+  }
+}
+
 struct PostingModalView: View {
   @Bindable var store: StoreOf<PostingModal>
+  @FocusState private var focusedField: PostingModal.Field?
+
   public init(store: StoreOf<PostingModal>) {
     self.store = store
   }
-
+  
   var body: some View {
-    NavigationStack {
-      VStack(alignment: .center, spacing: 32) {
-        Spacer()
-        if !store.selectedImages.isEmpty {
-          TabView {
-            ForEach(store.selectedImages, id: \.self) { image in
-              if let image {
-                Image(uiImage: image)
-                  .clipShape(.rect(cornerRadius: 8))
-                  .aspectRatio(contentMode: .fit)
-                  .frame(width: 300, height: 150, alignment: .center)
+    GeometryReader { geo in
+      NavigationStack {
+        VStack(alignment: .center, spacing: 32) {
+          // 名前
+          TextField("Title", text: $store.title)
+            .font(.title)
+            .padding()
+            .focused($focusedField, equals: .title)
+            .onSubmit {
+              focusedField = .content
+            }
+          
+          // ブランド（不要？）
+          
+          
+          // 場所
+          
+          
+          // 場所（詳細）
+          
+          
+          // 評価
+          
+          
+          // コメント
+          
+          
+          // 日付
+          
+          
+          // 写真
+          
+          
+          
+          // Type選択
+          HStack {
+            Button(action: {
+              store.send(.tapCategoryType(store.selectedType))
+            }, label: {
+              typeView(type: store.selectedType)
+                .foregroundStyle(.black)
+            })
+            .frame(height: 144)
+            .padding(.horizontal, 24)
+            .overlay(
+              RoundedRectangle(cornerRadius: 30)
+                .stroke(Color.black, lineWidth: 2)
+            )
+            .padding()
+            Spacer()
+            // 星
+            starView(count: store.starCount)
+              .frame(height: 144)
+              .padding(.horizontal, 32)
+          }
+          .padding(.horizontal, 16)
+          
+          
+          VStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+              HStack {
+                ForEach(store.selectedImages, id: \.self) { image in
+                  Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 100, height: 100)
+                    .clipShape(.rect(cornerRadius: 8))
+                }
+                // 画像
+                PhotosPicker(
+                  selection: $store.selectedPhotos,
+                  maxSelectionCount: 4,
+                  matching: .images,
+                  photoLibrary: .shared()
+                ) {
+                    Image(systemName: "photo")
+                      .resizable()
+                      .aspectRatio(contentMode: .fit)
+                      .frame(width: 32)
+                      .foregroundStyle(Color.black)
+                      .padding(32)
+                }
+                .onChange(of: store.selectedPhotos) {
+                  store.send(.selectedPhotosOnchange)
+                }
               }
             }
-            .tabViewStyle(.page)
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .interactive))
-            .frame(width: 300)
-          }
-        }
-        
-        // 画像
-        PhotosPicker(
-          selection: $store.selectedPhotos,
-          maxSelectionCount: 4,
-          matching: .images,
-          photoLibrary: .shared()
-        ) {
-          Image(systemName: "photo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 32)
-                        .foregroundStyle(Color.gray)
-        }
-        .onChange(of: store.selectedPhotos) {
-          store.send(.selectedPhotosOnchange)
-        }
-        
-        // Type選択
-        HStack(spacing: 8) {
-          ForEach(PostItem.ItemType.allCases, id: \.self) { item in
-            Button(action: {
-              store.send(.tapCategoryType(item))
-            }, label: {
-              typeView(type: item)
-            })
-            .padding(8)
-            .background(item == store.selectedType ? Color.brown : Color.gray.opacity(0.5))
-            .foregroundStyle(item == store.selectedType ? Color.white : Color.black)
+            .frame(height: 120)
+            .padding(.horizontal)
             
-            .clipShape(.rect(cornerRadius: 8))
-          }
-        }
-        .padding(.top, 16)
-        // 店舗名or商品名
-        TextField("Title", text: $store.title)
-          .padding(.horizontal, 32)
-        // 星
-        starView(count: store.starCount)
-        // 場所
-        TextField("Place", text: $store.place)
-          .padding(.horizontal, 32)
-        // description
-        ZStack(alignment: .topLeading) {
-          TextEditor(text: $store.description)
-            .padding(12)
-          if store.description.isEmpty {
-            Text("Description") .foregroundColor(Color(uiColor: .placeholderText))
-                .padding(20)
-                .allowsHitTesting(false)
-          }
-        }
-        Spacer()
-      }
-      .background(Color.blue.opacity(0.2))
-      .toolbar {
-        ToolbarItem(placement: .topBarLeading) {
-          Button {
-            store.send(.tapCancelButton)
-          } label: {
-            Text("キャンセル")
-              .padding(.leading, 8)
-          }
-        }
-        ToolbarItem(placement: .topBarTrailing) {
-          Button {
             
-          } label: {
-            Text("投稿")
-              .padding(.trailing, 8)
+            
+            ZStack(alignment: .topLeading) {
+              TextEditor(text: $store.description)
+                .padding()
+                .focused($focusedField, equals: .content)
+              if store.description.isEmpty {
+                
+                Text("Content")
+                  .foregroundStyle(Color.gray)
+                  .padding(24)
+              }
+            }
+            
           }
         }
+        .background(Color.brown.opacity(0.9))
+        .toolbar {
+          ToolbarItem(placement: .topBarLeading) {
+            Button {
+              store.send(.tapCancelButton)
+            } label: {
+              Text("キャンセル")
+                .padding(.leading, 8)
+            }
+          }
+          ToolbarItem(placement: .topBarTrailing) {
+            Button {
+              
+            } label: {
+              Text("投稿")
+                .padding(.trailing, 8)
+            }
+          }
+        }
+        .foregroundStyle(.black)
       }
     }
   }
@@ -193,27 +246,13 @@ struct PostingModalView: View {
   // Type選択ボタン
   @ViewBuilder
   private func typeView(type: PostItem.ItemType) -> some View {
-    switch type {
-    case .cafe:
-      HStack(alignment: .center, spacing: 4) {
-        Image(systemName: "storefront")
-          .resizable()
-          .aspectRatio(contentMode: .fit)
-          .frame(width: 24)
-        Text("cafe")
-          .font(.system(size: 16))
-      }
-      .frame(height: 24)
-    case .coffee:
-      HStack(alignment: .center, spacing: 4) {
-        Image(systemName: "cup.and.saucer")
-          .resizable()
-          .aspectRatio(contentMode: .fit)
-          .frame(width: 24)
-        Text("coffee")
-          .font(.system(size: 16))
-      }
-      .frame(height: 24)
+    VStack {
+      Image(systemName: "storefront")
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .frame(width: 48)
+      Text("coffee")
+        .font(.system(size: 24).bold())
     }
   }
 
@@ -228,13 +267,13 @@ struct PostingModalView: View {
             Image(systemName: "star.fill")
               .resizable()
               .aspectRatio(contentMode: .fit)
-              .frame(height: 16)
+              .frame(height: 24)
               .foregroundStyle(Color.yellow)
           } else {
             Image(systemName: "star")
               .resizable()
               .aspectRatio(contentMode: .fit)
-              .frame(height: 16)
+              .frame(height: 24)
               .foregroundStyle(Color.yellow)
           }
         })

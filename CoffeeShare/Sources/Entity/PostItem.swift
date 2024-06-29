@@ -71,5 +71,24 @@ extension PostItem {
   public enum ItemType: String, Codable, CaseIterable {
     case cafe
     case coffee
+  
+    public var typeName: String {
+      switch self {
+      case .cafe:
+        return "cafe"
+      case .coffee:
+        return "coffee"
+      }
+    }
+    
+    public var imageName: String {
+      switch self {
+      case .cafe:
+        return "storefront"
+      case .coffee:
+        return "cup.and.saucer"
+      }
+    }
+
   }
 }

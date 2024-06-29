@@ -41,6 +41,8 @@ public struct PostList {
     case binding(BindingAction<State>)
     case postItems(IdentifiedActionOf<PostListItem>)
     case path(StackAction<Path.State, Path.Action>)
+    // 投稿ボタン
+    case tapPostingButton
   }
 
   @Dependency(\.coffeeAPIClient) var coffeeAPIClient
@@ -107,6 +109,9 @@ public struct PostList {
         
       case .path:
         return .none
+      case .tapPostingButton:
+        state.destination = .postingModal(PostingModal.State())
+        return .none
       }
     }
     .ifLet(\.$destination, action: \.destination) {
@@ -128,6 +133,7 @@ extension PostList {
   @Reducer(state: .equatable)
   public enum Destination {
     case postFilter(PostFilter)
+    case postingModal(PostingModal)
   }
 }
 
@@ -141,33 +147,57 @@ public struct PostListView: View {
 
   public var body: some View {
     NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-      Group {
-        if store.isLoading {
-          ProgressView()
-        } else {
-          VStack {
-            HStack {
-              Spacer()
-              Button(action: {
-                store.send(.tapFilterButton)
-              }, label: {
-                Image(systemName: "line.3.horizontal.decrease.circle")
-              })
-              .padding(.init(top: 16, leading: 16, bottom: 16, trailing: 32))
-            }
-            Spacer()
-            List {
-              ForEach(store.scope(state: \.postItems, action: \.postItems)) { store in
-                PostListItemView.init(store: store)
-                  .listRowSeparator(.hidden)
+      ZStack {
+        Group {
+          if store.isLoading {
+            ProgressView()
+          } else {
+            VStack {
+              List {
+                ForEach(store.scope(state: \.postItems, action: \.postItems)) { store in
+                  PostListItemView.init(store: store)
+                    .listRowSeparator(.hidden)
+                }
               }
+              .listStyle(PlainListStyle())
             }
-            .listStyle(PlainListStyle())
           }
         }
-      }
-      .onAppear {
-        store.send(.onAppear)
+        .onAppear {
+          store.send(.onAppear)
+        }
+        .toolbar {
+          ToolbarItem(placement: .topBarTrailing) {
+            Button(action: {
+              store.send(.tapFilterButton)
+            }, label: {
+              Image(systemName: "line.3.horizontal.decrease.circle")
+            })
+            .padding()
+          }
+        }
+        VStack {
+          Spacer()
+          HStack {
+            Spacer()
+            Button {
+              store.send(.tapPostingButton)
+            } label: {
+              Image(systemName: "plus")
+                .resizable()
+                .frame(width: 16, height: 16)
+                .foregroundStyle(Color.black)
+            }
+            .frame(width: 56, height: 56)
+            .background(Color.white)
+            .clipShape(.rect(cornerRadius: 8))
+            .overlay(
+              RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.black, lineWidth: 2)
+            )
+            .padding(32)
+          }
+        }
       }
     } destination: { store in
       switch store.case {
@@ -178,6 +208,9 @@ public struct PostListView: View {
     .sheet(item: $store.scope(state: \.destination?.postFilter, action: \.destination.postFilter)) { store in
       PostFilterView(store: store)
         .presentationDetents([.medium])
+    }
+    .sheet(item: $store.scope(state: \.destination?.postingModal, action: \.destination.postingModal)) { store in
+      PostingModalView(store: store)
     }
   }
 }

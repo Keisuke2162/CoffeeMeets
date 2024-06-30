@@ -7,6 +7,7 @@
 
 import Foundation
 import HomeFeature
+import SettingFeature
 import SwiftUI
 
 public struct RootView: View {
@@ -23,7 +24,9 @@ public struct RootView: View {
           Label("Search", systemImage: "magnifyingglass")
         }
         .tag(2)
-      Text("3")
+      SettingView(store: .init(initialState: Setting.State(), reducer: {
+        Setting()
+      }))
         .tabItem {
           Label("My Page", systemImage: "person")
         }

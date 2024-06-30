@@ -43,6 +43,7 @@ let package = Package(
         name: "RootFeature",
         dependencies: [
           "HomeFeature",
+          "SettingFeature",
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         ]
       ),
@@ -52,6 +53,12 @@ let package = Package(
           "Entity",
           "Extensions",
           "APIClient",
+          .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        ]
+      ),
+      .target(
+        name: "SettingFeature",
+        dependencies: [
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         ]
       ),

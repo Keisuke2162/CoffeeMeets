@@ -55,7 +55,16 @@ public struct SettingView: View {
   
   public var body: some View {
     NavigationStack {
-      Text("Test")
+      List {
+        Section("アカウント") {
+          Text("プロフィール")
+        }
+        Section("アプリ情報") {
+          Text("利用規約")
+          Text("プライバシーポリシー")
+          Text("このアプリについて")
+        }
+      }
     }
   }
 }

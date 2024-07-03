@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
       .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.11.1"),
-      .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.28.1"),
+      .package(url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "10.0.0"))
     ],
     targets: [
       .target(
@@ -31,6 +31,13 @@ let package = Package(
         ]
       ),
       .target(
+        name: "FirebaseClient",
+        dependencies: [
+          .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+          .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
+        ]
+      ),
+      .target(
         name: "AppFeature",
         dependencies: [
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -45,7 +52,10 @@ let package = Package(
         dependencies: [
           "HomeFeature",
           "SettingFeature",
+          "FirebaseClient",
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+          .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
+          .product(name: "FirebaseFirestore", package: "firebase-ios-sdk"),
         ]
       ),
       .target(
@@ -59,6 +69,12 @@ let package = Package(
       ),
       .target(
         name: "SettingFeature",
+        dependencies: [
+          .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        ]
+      ),
+      .target(
+        name: "SigninFeature",
         dependencies: [
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         ]

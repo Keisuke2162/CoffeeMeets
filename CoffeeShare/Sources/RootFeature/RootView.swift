@@ -6,35 +6,52 @@
 //
 
 import Foundation
+import FirebaseAuth
+import FirebaseClient
 import HomeFeature
 import SettingFeature
 import SwiftUI
+import ComposableArchitecture
 
-public struct RootView: View {
+@Reducer
+public struct Root {
+  @ObservableState
+  public struct State: Equatable {
+
+    public init() {
+    }
+  }
+
+  public enum Action {
+    case onAppear
+  }
+
+  @Dependency(\.firebaseAuthClient) var firebaseAuthClient
+
   public init() {}
-  public var body: some View {
-    TabView {
-      HomeView()
-        .tabItem {
-          Label("Home", systemImage: "house")
-        }
-        .tag(1)
-      Text("2")
-        .tabItem {
-          Label("Search", systemImage: "magnifyingglass")
-        }
-        .tag(2)
-      SettingView(store: .init(initialState: Setting.State(), reducer: {
-        Setting()
-      }))
-        .tabItem {
-          Label("My Page", systemImage: "person")
-        }
-        .tag(3)
+
+  public var body: some ReducerOf<Self> {
+    Reduce { state, action in
+      switch action {
+      case .onAppear:
+        return .none
+      }
     }
   }
 }
 
-#Preview {
-  RootView()
+public struct RootView: View {
+  let store: StoreOf<Root>
+  
+  public init(store: StoreOf<Root>) {
+    self.store = store
+  }
+
+  public var body: some View {
+    Text("")
+  }
 }
+
+//#Preview {
+//  RootView()
+//}

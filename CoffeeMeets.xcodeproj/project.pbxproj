@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		67056C7E2C39EF3400356968 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67056C7D2C39EF3400356968 /* GoogleService-Info.plist */; };
+		67056C802C39F26900356968 /* SigninFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 67056C7F2C39F26900356968 /* SigninFeature */; };
 		6756E2A92BFD56AD0036184D /* RootFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6756E2A82BFD56AD0036184D /* RootFeature */; };
 		67ECB5602BFBBADF00D18BDA /* CoffeeMeetsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */; };
 		67ECB5642BFBBAE000D18BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67ECB5632BFBBAE000D18BDA /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6756E2A92BFD56AD0036184D /* RootFeature in Frameworks */,
+				67056C802C39F26900356968 /* SigninFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +110,7 @@
 			name = CoffeeMeets;
 			packageProductDependencies = (
 				6756E2A82BFD56AD0036184D /* RootFeature */,
+				67056C7F2C39F26900356968 /* SigninFeature */,
 			);
 			productName = CoffeeMeets;
 			productReference = 67ECB55C2BFBBADF00D18BDA /* CoffeeMeets.app */;
@@ -376,6 +379,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		67056C7F2C39F26900356968 /* SigninFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SigninFeature;
+		};
 		6756E2A82BFD56AD0036184D /* RootFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RootFeature;

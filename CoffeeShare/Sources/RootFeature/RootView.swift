@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseClient
 import HomeFeature
 import SettingFeature
+import SigninFeature
 import SwiftUI
 import ComposableArchitecture
 
@@ -68,7 +69,9 @@ public struct RootView: View {
       } else if store.isLogin {
         Text("ホーム画面")
       } else {
-        Text("ログイン画面")
+        SignInView(store: .init(initialState: SignIn.State(), reducer: {
+          SignIn()
+        }))
       }
     }
     .onAppear {

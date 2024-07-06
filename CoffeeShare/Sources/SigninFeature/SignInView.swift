@@ -13,6 +13,12 @@ import SwiftUI
 public struct SignIn {
   @ObservableState
   public struct State: Equatable {
+    var emailAddress: String = ""
+    var password: String = ""
+    var isEnableSigninButton: Bool {
+      return !emailAddress.isEmpty && !password.isEmpty
+    }
+
     public init() {}
   }
   
@@ -44,14 +50,24 @@ public struct SignInView: View {
   }
   
   public var body: some View {
-    NavigationStack {
-      Text("A")
+    VStack(spacing: 16) {
+      TextField("Email", text: $store.emailAddress)
+      SecureField(text: $store.password) {
+        Text("password")
+      }
+      Button {
+        
+      } label: {
+        Text("ログイン")
+      }
+      .disabled(!store.isEnableSigninButton)
     }
+    .padding(.horizontal, 36)
   }
 }
 
-//#Preview {
-//  SignInView(store: .init(initialState: SignIn.State(), reducer: {
-//    SignIn()
-//  }))
-//}
+#Preview {
+  SignInView(store: .init(initialState: SignIn.State(), reducer: {
+    SignIn()
+  }))
+}

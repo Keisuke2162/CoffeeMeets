@@ -10,6 +10,7 @@ let package = Package(
     ],
     products: [
       .library(name: "RootFeature", targets: ["RootFeature"]),
+      .library(name: "SigninFeature", targets: ["SigninFeature"]),
     ],
     dependencies: [
       .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.11.1"),

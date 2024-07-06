@@ -10,7 +10,7 @@ let package = Package(
     ],
     products: [
       .library(name: "RootFeature", targets: ["RootFeature"]),
-      .library(name: "SigninFeature", targets: ["SigninFeature"]),
+      .library(name: "AuthFeature", targets: ["AuthFeature"]),
     ],
     dependencies: [
       .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.11.1"),
@@ -75,7 +75,7 @@ let package = Package(
         ]
       ),
       .target(
-        name: "SigninFeature",
+        name: "AuthFeature",
         dependencies: [
           .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         ]

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		67056C7E2C39EF3400356968 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67056C7D2C39EF3400356968 /* GoogleService-Info.plist */; };
 		6756E2A92BFD56AD0036184D /* RootFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6756E2A82BFD56AD0036184D /* RootFeature */; };
 		67ECB5602BFBBADF00D18BDA /* CoffeeMeetsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */; };
 		67ECB5642BFBBAE000D18BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67ECB5632BFBBAE000D18BDA /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		67056C7D2C39EF3400356968 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6756E2A72BFD55DB0036184D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		67ECB55C2BFBBADF00D18BDA /* CoffeeMeets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoffeeMeets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeMeetsApp.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 		67ECB55E2BFBBADF00D18BDA /* CoffeeMeets */ = {
 			isa = PBXGroup;
 			children = (
+				67056C7D2C39EF3400356968 /* GoogleService-Info.plist */,
 				67ECB55F2BFBBADF00D18BDA /* CoffeeMeetsApp.swift */,
 				67ECB5632BFBBAE000D18BDA /* Assets.xcassets */,
 				67ECB5652BFBBAE000D18BDA /* Preview Content */,
@@ -152,6 +155,7 @@
 			files = (
 				67ECB5672BFBBAE000D18BDA /* Preview Assets.xcassets in Resources */,
 				67ECB5642BFBBAE000D18BDA /* Assets.xcassets in Resources */,
+				67056C7E2C39EF3400356968 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

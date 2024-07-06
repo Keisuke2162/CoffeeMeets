@@ -17,6 +17,8 @@ import ComposableArchitecture
 public struct Root {
   @ObservableState
   public struct State: Equatable {
+    var isLoading = true
+    var isLogin = false
 
     public init() {
     }
@@ -24,6 +26,7 @@ public struct Root {
 
   public enum Action {
     case onAppear
+    case firebaseCheckLoginResult(Result<Bool, Error>)
   }
 
   @Dependency(\.firebaseAuthClient) var firebaseAuthClient
@@ -34,7 +37,18 @@ public struct Root {
     Reduce { state, action in
       switch action {
       case .onAppear:
-        return .none
+        return .run { send in
+          await send(.firebaseCheckLoginResult(Result { try await firebaseAuthClient.getAuthStatus() }))
+        }
+      case let .firebaseCheckLoginResult(result):
+        state.isLoading = false
+        switch result {
+        case let .success(isLogin):
+          state.isLogin = isLogin
+          return .none
+        case .failure:
+          return .none
+        }
       }
     }
   }
@@ -48,7 +62,18 @@ public struct RootView: View {
   }
 
   public var body: some View {
-    Text("")
+    Group {
+      if store.isLoading {
+        ProgressView()
+      } else if store.isLogin {
+        Text("ホーム画面")
+      } else {
+        Text("ログイン画面")
+      }
+    }
+    .onAppear {
+      store.send(.onAppear)
+    }
   }
 }
 

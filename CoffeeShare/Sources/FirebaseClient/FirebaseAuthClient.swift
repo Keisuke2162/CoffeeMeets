@@ -19,7 +19,7 @@ extension FirebaseAuthClient: DependencyKey {
   public static let liveValue: Self = {
     return FirebaseAuthClient(
       getAuthStatus: {
-        return false
+        return Auth.auth().currentUser != nil
       }
     )
   }()
